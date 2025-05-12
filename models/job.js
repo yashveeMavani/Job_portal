@@ -1,38 +1,45 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Job extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Job.hasMany(models.Application, {
+        foreignKey: "jobId",
+        as: "Applications",
+      });
     }
   }
-  Job.init({
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    location: DataTypes.STRING,
-    salary: DataTypes.STRING,
-    jobType: DataTypes.STRING,
-    industry: DataTypes.STRING,
-    requirements: DataTypes.TEXT,
-    employerId: DataTypes.INTEGER,
-    views: { 
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
+  Job.init(
+    {
+      title: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      location: DataTypes.STRING,
+      salary: DataTypes.STRING,
+      jobType: DataTypes.STRING,
+      industry: DataTypes.STRING,
+      requirements: DataTypes.TEXT,
+      employerId: DataTypes.INTEGER,
+      views: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      isApproved: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      isFlagged: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      applicationsCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
     },
-    applicationsCount: { 
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
+    {
+      sequelize,
+      modelName: "Job",
     }
-  }, {
-    sequelize,
-    modelName: 'Job',
-  });
+  );
   return Job;
 };

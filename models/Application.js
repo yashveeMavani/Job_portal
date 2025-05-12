@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     });
   
     Application.associate = (models) => {
-      Application.belongsTo(models.User, { foreignKey: 'jobSeekerId' });
-      Application.belongsTo(models.Job, { foreignKey: 'jobId' });
+      Application.belongsTo(models.User, { foreignKey: 'jobSeekerId', as: 'User'});
+      Application.belongsTo(models.Job, { foreignKey: 'jobId' , as: 'Job' });
     };
   
     return Application;
